@@ -14,8 +14,9 @@ class ApiAuthController extends BaseController
 {
     public function login(Request $request)
     {
-        try {
+        DB::beginTransaction();
 
+        try {
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
@@ -29,11 +30,16 @@ class ApiAuthController extends BaseController
                 ]);
             }
 
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            DB::commit();
+
             return $this->successResponse([
-                'token' => $user->createToken('auth_token')->plainTextToken
+                'token' => $token
             ]);
             
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Login failed: ' . $e->getMessage());
             return $this->errorResponse('An error occurred during login. Please try again.', 500);
         }
