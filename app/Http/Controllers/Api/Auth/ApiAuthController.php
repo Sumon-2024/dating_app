@@ -8,32 +8,45 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class ApiAuthController extends BaseController
 {
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        try {
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
             ]);
-        }
 
-        return $this->successResponse([
-            'token' => $user->createToken('auth_token')->plainTextToken
-        ]);
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['The provided credentials are incorrect.'],
+                ]);
+            }
+
+            return $this->successResponse([
+                'token' => $user->createToken('auth_token')->plainTextToken
+            ]);
+            
+        } catch (\Exception $e) {
+            Log::error('Login failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred during login. Please try again.', 500);
+        }
     }
 
     public function user(Request $request)
     {
-        return $this->successResponse($request->user());
+        try {
+            return $this->successResponse($request->user());
+        } catch (\Exception $e) {
+            Log::error('User retrieval failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred while retrieving the user. Please try again.', 500);
+        }
     }
 
     public function logout(Request $request)
@@ -42,14 +55,24 @@ class ApiAuthController extends BaseController
             return $this->errorResponse('Unauthorized', 401);
         }
 
-        Log::info('Tokens before logout: ', $request->user()->tokens->toArray());
+        DB::beginTransaction();
 
-        $request->user()->tokens->each(function ($token) {
-            $token->delete();
-        });
+        try {
+            Log::info('Tokens before logout: ', $request->user()->tokens->toArray());
 
-        Log::info('Tokens after logout: ', $request->user()->tokens->toArray());
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
 
-        return $this->successResponse(['message' => 'Logged out successfully.']);
+            DB::commit();
+
+            Log::info('Tokens after logout: ', $request->user()->tokens->toArray());
+            return $this->successResponse(['message' => 'Logged out successfully.']);
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Logout transaction failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred while logging out. Please try again.', 500);
+        }
     }
 }
