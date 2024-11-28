@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Traits\ApiResponseTrait;
+use App\Http\Controllers\BaseController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 
-class ApiAuthController extends Controller
+class ApiAuthController extends BaseController
 {
-    // Include the trait
-    use ApiResponseTrait;  
-
     public function login(Request $request)
     {
         $request->validate([
