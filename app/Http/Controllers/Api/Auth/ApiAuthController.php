@@ -81,4 +81,59 @@ class ApiAuthController extends BaseController
             return $this->errorResponse('An error occurred while logging out. Please try again.', 500);
         }
     }
+
+
+    public function editProfile(Request $request){
+        return $this->updateProfile($request);  
+    }
+
+
+    public function updateProfile(Request $request){
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $request->user()->id,
+                'password' => 'nullable|string|min:6|confirmed', 
+            ]);
+
+            $user = $request->user();
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if ($request->has('password') && $request->password) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            return $this->successResponse([
+                'message' => 'Profile updated successfully.',
+                'data' => $user
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Profile update failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred while updating the profile. Please try again.', 500);
+        }
+    }
+
+
+
+    public function deleteAccount(Request $request){
+        try {
+            $user = $request->user();
+
+            $user->delete();
+            
+            return $this->successResponse([
+                'message' => 'Account deleted successfully.',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Account deletion failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred while deleting the account. Please try again.', 500);
+        }
+    }
+
+
 }
