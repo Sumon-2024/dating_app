@@ -13,115 +13,145 @@ use Illuminate\Support\Facades\DB;
 class ApiAuthController extends BaseController
 {
 
-    /** 
+    /**
      * @method
-     * User Login
+     * Handles user login and generates an authentication token upon successful login.
      * 
-     * @bodyParam email string required Example: admin@gmail.com
-     * @bodyParam password string required Example: 123456789
+     * @description Validates user credentials and generates a token for authentication. Returns an error if the credentials are invalid or any exception occurs during the process.
      * 
-     * @response scenario="Success" {
-     * "status": "Success",
-     * "message": "Success",
-     * "data": {
-     *   "token": "1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z"
-     *  }
+     * @bodyParam email string required The email address of the user. Example: admin@gmail.com
+     * @bodyParam password string required The password of the user. Example: 123456789
+     * 
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "Login successful.",
+     *   "data": {
+     *       "token": "1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z",
+     *       "user": {
+     *           "id": 1,
+     *           "name": "admin",
+     *           "email": "admin@gmail.com"
+     *       }
+     *   }
      * }
      * 
-     * @response 401 scenario="error" {
-     * "status": "error",
-     * "message": "An error occurred during login. Please try again."
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Invalid credentials. Please try again."
      * }
      * 
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred during login. Please try again."
+     * }
      */
 
-    public function login(Request $request)
-    {
-        DB::beginTransaction();
-
-        try {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-
-            $user = User::where('email', $request->email)->first();
-
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
-                ]);
-            }
-
-            $token = $user->createToken('auth_token')->plainTextToken;
-
-            DB::commit();
-
-            return $this->successResponse([
-                'token' => $token
-            ]);
-            
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Login failed: ' . $e->getMessage());
-            return $this->errorResponse('An error occurred during login. Please try again.', 500);
-        }
-    }
-
+     public function login(Request $request)
+     {
+         DB::beginTransaction();
+     
+         try {
+             $request->validate([
+                 'email' => 'required|email',
+                 'password' => 'required',
+             ]);
+     
+             $user = User::where('email', $request->email)->first();
+     
+             if (!$user || !Hash::check($request->password, $user->password)) {
+                 return $this->errorResponse('Invalid credentials. Please try again.', 401);
+             }
+     
+             $token = $user->createToken('auth_token')->plainTextToken;
+     
+             DB::commit();
+     
+             return $this->successResponse([
+                 'token' => $token,
+                 'user' => [
+                     'id' => $user->id,
+                     'name' => $user->name,
+                     'email' => $user->email
+                 ]
+             ]);
+     
+         } catch (\Exception $e) {
+             DB::rollBack();
+             Log::error('Login failed for email: ' . $request->email . ', Error: ' . $e->getMessage());
+             return $this->errorResponse('An error occurred during login. Please try again.', 500);
+         }
+     }
+     
 
 
     /**
      * @method
      * Get Auth User Information
      * 
-     * @description Retrieves the logged-in user's information.
+     * @description Retrieves the logged-in user's information, including ID, name, email, and timestamps.
      * 
-     * @response scenario="Success" {
-     * "status": "Success",
-     * "message": "User retrieved successfully",
-     * "data": {
-     *   "id": 1,
-     *   "name": "John Doe",
-     *   "email": "john.doe@example.com"
-     * }
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "User information retrieved successfully.",
+     *   "data": {
+     *       "id": 1,
+     *       "name": "admin",
+     *       "email": "admin@gmail.com",
+     *       "email_verified_at": null,
+     *       "created_at": "2024-11-30T03:40:17.000000Z",
+     *       "updated_at": "2024-11-30T03:40:17.000000Z"
+     *   }
      * }
      * 
-     * @response 500 scenario="Server Error" {
-     * "status": "error",
-     * "message": "An error occurred while retrieving the user. Please try again."
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Unauthorized."
+     * }
+     * 
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred while retrieving the user. Please try again."
      * }
      */
-
     public function user(Request $request)
     {
+        if (!$request->user()) {
+            return $this->errorResponse('Unauthorized', 401);
+        }
+
         try {
             return $this->successResponse($request->user());
         } catch (\Exception $e) {
-            Log::error('User retrieval failed: ' . $e->getMessage());
+            Log::error('User retrieval failed for user ID: ' . optional($request->user())->id . ', Error: ' . $e->getMessage());
             return $this->errorResponse('An error occurred while retrieving the user. Please try again.', 500);
         }
     }
+
 
 
     /**
      * @method
      * User Logout
      * 
-     * @description Logs the user out by deleting all tokens associated with the user.
+     * @description Logs the user out by deleting all active authentication tokens associated with the user. 
+     * Ensures the user is fully logged out and cannot access authenticated routes until they log in again.
      * 
-     * @response scenario="Successful Logout" {
-     * "status": "success",
-     * "message": "Logged out successfully."
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "Logout successful.",
+     *   "data": {
+     *       "message": "Logged out successfully."
+     *   }
      * }
      * 
-     * @response 401 scenario="Unauthorized" {
-     * "status": "error",
-     * "message": "Unauthorized"
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Unauthorized."
      * }
      * 
-     * @response 500 scenario="Server Error" {
-     * "status": "error",
-     * "message": "An error occurred while logging out. Please try again."
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred while logging out. Please try again."
      * }
      */
 
