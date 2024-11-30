@@ -313,20 +313,49 @@ class ApiAuthController extends BaseController
 
 
 
-    public function deleteAccount(Request $request){
+    /** 
+     * @method
+     * Delete User Account
+     * 
+     * @description Allows the logged-in user to permanently delete their account. After deletion, the user will be logged out and their profile information will no longer exist in the system.
+     * 
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "Success",
+     *   "data": {
+     *       "message": "Account deleted successfully."
+     *   }
+     * }
+     * 
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Unauthorized. You must be logged in to delete your account."
+     * }
+     * 
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred while deleting the account. Please try again."
+     * }
+     */
+    public function deleteAccount(Request $request)
+    {
         try {
             $user = $request->user();
 
+            // Delete user account
             $user->delete();
-            
+
+            // Return success response
             return $this->successResponse([
                 'message' => 'Account deleted successfully.',
             ]);
+
         } catch (\Exception $e) {
             Log::error('Account deletion failed: ' . $e->getMessage());
             return $this->errorResponse('An error occurred while deleting the account. Please try again.', 500);
         }
     }
+
 
 
 }
