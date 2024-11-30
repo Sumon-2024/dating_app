@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Laravel
-  description: ''
+  title: 'Dating App'
+  description: 'This is the API documentation for the Dating App'
   version: 1.0.0
 servers:
   -
@@ -13,9 +13,85 @@ paths:
       operationId: postApiLogin
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: 'Successful Login'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Login successful'
+                  data:
+                    token: ' '
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Login successful'
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: ' '
+        401:
+          description: 'Invalid Credentials'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'The provided credentials are incorrect.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'The provided credentials are incorrect.'
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred during login. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred during login. Please try again.'
       tags:
         - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: ''
+                  example: user@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: '123456789'
+                  nullable: false
+              required:
+                - email
+                - password
       security: []
   /api/user/logout:
     post:
@@ -23,7 +99,55 @@ paths:
       operationId: postApiUserLogout
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: 'Successful Logout'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Logged out successfully.'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Logged out successfully.'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: Unauthorized
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Unauthorized
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while logging out. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while logging out. Please try again.'
       tags:
         - Endpoints
       security: []
@@ -34,18 +158,54 @@ paths:
       description: ''
       parameters: []
       responses:
-        401:
-          description: ''
+        200:
+          description: 'Successful User Retrieval'
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
+                  status: success
+                  message: 'User retrieved successfully'
+                  data:
+                    id: 1
+                    name: 'John Doe'
+                    email: john.doe@example.com
                 properties:
+                  status:
+                    type: string
+                    example: success
                   message:
                     type: string
-                    example: Unauthenticated.
+                    example: 'User retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john.doe@example.com
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while retrieving the user. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while retrieving the user. Please try again.'
       tags:
         - Endpoints
       security: []
@@ -55,9 +215,78 @@ paths:
       operationId: putApiUserUpdate
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: 'Successful Profile Update'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Profile updated successfully.'
+                  data:
+                    name: 'John Doe'
+                    email: john.doe@example.com
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Profile updated successfully.'
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john.doe@example.com
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while updating the profile. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while updating the profile. Please try again.'
       tags:
         - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: 'John Doe'
+                  nullable: false
+                email:
+                  type: string
+                  description: ''
+                  example: john.doe@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: optional
+                  example: '12345678'
+                  nullable: false
+              required:
+                - name
+                - email
       security: []
   /api/user/edit:
     post:
@@ -65,9 +294,83 @@ paths:
       operationId: postApiUserEdit
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: 'Successful Profile Edit'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Profile updated successfully.'
+                  data:
+                    name: 'John Doe'
+                    email: john.doe@example.com
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Profile updated successfully.'
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: 'John Doe'
+                      email:
+                        type: string
+                        example: john.doe@example.com
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while updating the profile. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while updating the profile. Please try again.'
       tags:
         - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: 'John Doe'
+                  nullable: false
+                email:
+                  type: string
+                  description: ''
+                  example: john.doe@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: optional
+                  example: '12345678'
+                  nullable: false
+                confirm-password:
+                  type: string
+                  description: optional
+                  example: '12345678'
+                  nullable: false
+              required:
+                - name
+                - email
       security: []
   /api/user/delete:
     delete:
@@ -75,7 +378,39 @@ paths:
       operationId: deleteApiUserDelete
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: 'Successful Account Deletion'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: 'Account deleted successfully.'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: 'Account deleted successfully.'
+        500:
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while deleting the account. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while deleting the account. Please try again.'
       tags:
         - Endpoints
       security: []

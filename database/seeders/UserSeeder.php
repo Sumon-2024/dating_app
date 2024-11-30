@@ -9,8 +9,16 @@ use Illuminate\Support\Facades\Hash;
 class UserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * @method
+     * User Seeder for Admin
+     * 
+     * @description Seeds the database with an admin user.
+     * 
+     * @bodyParam name string required Example: admin
+     * @bodyParam email string required Example: admin@gmail.com
+     * @bodyParam password string required Example: 123456789
      */
+    
     public function run(): void
     {
         User::create([

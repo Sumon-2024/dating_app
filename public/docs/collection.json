@@ -9,9 +9,9 @@
         }
     ],
     "info": {
-        "name": "Laravel",
-        "_postman_id": "a9a0bf39-668a-4038-a487-555527f90f93",
-        "description": "",
+        "name": "Dating App",
+        "_postman_id": "0ac39e1b-7d56-48e0-bac4-e7bb6d55c106",
+        "description": "This is the API documentation for the Dating App",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
@@ -39,13 +39,35 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"user@example.com\",\"password\":\"123456789\"}"
+                        },
                         "description": "",
                         "auth": {
                             "type": "noauth"
                         }
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"Login successful\",\n\"data\": {\n  \"token\": \" \"\n }\n}",
+                            "name": "Successful Login"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"The provided credentials are incorrect.\"\n}",
+                            "name": "Invalid Credentials"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred during login. Please try again.\"\n}",
+                            "name": "Server Error"
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/user\/logout",
@@ -73,7 +95,26 @@
                             "type": "noauth"
                         }
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"Logged out successfully.\"\n}",
+                            "name": "Successful Logout"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"Unauthorized\"\n}",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while logging out. Please try again.\"\n}",
+                            "name": "Server Error"
+                        }
+                    ]
                 },
                 {
                     "name": "GET api\/user",
@@ -103,23 +144,16 @@
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
-                            "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
-                            "name": ""
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"User retrieved successfully\",\n\"data\": {\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
+                            "name": "Successful User Retrieval"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while retrieving the user. Please try again.\"\n}",
+                            "name": "Server Error"
                         }
                     ]
                 },
@@ -143,13 +177,29 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"password\":\"12345678\"}"
+                        },
                         "description": "",
                         "auth": {
                             "type": "noauth"
                         }
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"Profile updated successfully.\",\n\"data\": {\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
+                            "name": "Successful Profile Update"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
+                            "name": "Server Error"
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/user\/edit",
@@ -171,13 +221,29 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"password\":\"12345678\",\"confirm-password\":\"12345678\"}"
+                        },
                         "description": "",
                         "auth": {
                             "type": "noauth"
                         }
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"Profile updated successfully.\",\n\"data\": {\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
+                            "name": "Successful Profile Edit"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
+                            "name": "Server Error"
+                        }
+                    ]
                 },
                 {
                     "name": "DELETE api\/user\/delete",
@@ -205,7 +271,20 @@
                             "type": "noauth"
                         }
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"status\": \"success\",\n\"message\": \"Account deleted successfully.\"\n}",
+                            "name": "Successful Account Deletion"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while deleting the account. Please try again.\"\n}",
+                            "name": "Server Error"
+                        }
+                    ]
                 }
             ]
         }

@@ -21,10 +21,65 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: ''
+        required: true
+        example: user@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: '123456789'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      email: user@example.com
+      password: '123456789'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "Login successful",
+          "data": {
+            "token": " "
+           }
+          }
+        headers: []
+        description: 'Successful Login'
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+          "status": "error",
+          "message": "The provided credentials are incorrect."
+          }
+        headers: []
+        description: 'Invalid Credentials'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred during login. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -54,7 +109,37 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "Logged out successfully."
+          }
+        headers: []
+        description: 'Successful Logout'
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+          "status": "error",
+          "message": "Unauthorized"
+          }
+        headers: []
+        description: Unauthorized
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred while logging out. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -86,13 +171,29 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "User retrieved successfully",
+          "data": {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+          }
+          }
+        headers: []
+        description: 'Successful User Retrieval'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred while retrieving the user. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
         custom: []
     responseFields: []
     auth: []
@@ -120,10 +221,67 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: true
+        example: john.doe@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: optional
+        required: false
+        example: '12345678'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'John Doe'
+      email: john.doe@example.com
+      password: '12345678'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "Profile updated successfully.",
+          "data": {
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+          }
+          }
+        headers: []
+        description: 'Successful Profile Update'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred while updating the profile. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -150,10 +308,78 @@ endpoints:
     cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: 'John Doe'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: true
+        example: john.doe@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: optional
+        required: false
+        example: '12345678'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      confirm-password:
+        name: confirm-password
+        description: optional
+        required: false
+        example: '12345678'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'John Doe'
+      email: john.doe@example.com
+      password: '12345678'
+      confirm-password: '12345678'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "Profile updated successfully.",
+          "data": {
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+          }
+          }
+        headers: []
+        description: 'Successful Profile Edit'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred while updating the profile. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -183,7 +409,27 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "status": "success",
+          "message": "Account deleted successfully."
+          }
+        headers: []
+        description: 'Successful Account Deletion'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+          "status": "error",
+          "message": "An error occurred while deleting the account. Please try again."
+          }
+        headers: []
+        description: 'Server Error'
+        custom: []
     responseFields: []
     auth: []
     controller: null

@@ -1,6 +1,6 @@
 # Introduction
 
-
+This is the API documentation for the Dating App
 
 <aside>
     <strong>Base URL</strong>: <code>http://localhost</code>
