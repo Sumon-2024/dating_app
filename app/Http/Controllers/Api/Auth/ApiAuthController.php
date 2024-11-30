@@ -232,7 +232,50 @@ class ApiAuthController extends BaseController
         return $this->updateProfile($request);
     }
 
-    
+        
+    /** 
+     * @method
+     * Update User Profile
+     * 
+     * @description Allows the logged-in user to update their profile information, including their name, email, and optionally, their password. 
+     * It returns the updated user information after a successful update.
+     * 
+     * @bodyParam name string required The name of the user. Example: "Admin"
+     * @bodyParam email string required The email address of the user. Example: "admin@example.com"
+     * @bodyParam password string nullable The new password for the user. Minimum of 6 characters. Example: "newpassword123"
+     * @bodyParam password_confirmation string nullable Confirmation of the new password. This field is required if the password is provided. Example: "newpassword123"
+     * 
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "Success",
+     *   "data": {
+     *       "message": "Profile updated successfully.",
+     *       "data": {
+     *           "id": 1,
+     *           "name": "Admin",
+     *           "email": "admin@gmail.com",
+     *           "email_verified_at": null,
+     *           "created_at": "2024-11-30T05:36:54.000000Z",
+     *           "updated_at": "2024-11-30T05:43:56.000000Z"
+     *       }
+     *   }
+     * }
+     * 
+     * @response 400 scenario="error" {
+     *   "status": "error",
+     *   "message": "Invalid data provided. Please check your inputs."
+     * }
+     * 
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Unauthorized. You must be logged in to update your profile."
+     * }
+     * 
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred while updating the profile. Please try again."
+     * }
+     */
     public function updateProfile(Request $request) {
         try {
             $request->validate([
@@ -240,33 +283,32 @@ class ApiAuthController extends BaseController
                 'email' => 'required|email|unique:users,email,' . $request->user()->id,
                 'password' => 'nullable|string|min:6|confirmed', 
             ]);
-    
+
             $user = $request->user();
-    
+
             // Update user details
             $user->name = $request->name;
             $user->email = $request->email;
-    
+
             // Update password if provided
             if ($request->has('password') && $request->password) {
                 $user->password = Hash::make($request->password);
             }
-    
+
             // Save user profile
             $user->save();
-    
+
             // Return success response
             return $this->successResponse([
                 'message' => 'Profile updated successfully.',
                 'data' => $user
             ]);
-    
+
         } catch (\Exception $e) {
             Log::error('Profile update failed: ' . $e->getMessage());
             return $this->errorResponse('An error occurred while updating the profile. Please try again.', 500);
         }
     }
-    
 
 
     /**
