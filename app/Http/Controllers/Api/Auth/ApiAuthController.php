@@ -311,22 +311,7 @@ class ApiAuthController extends BaseController
     }
 
 
-    /**
-     * @method
-     * Delete User Account
-     * 
-     * @description Deletes the logged-in user's account.
-     * 
-     * @response scenario="Successful Account Deletion" {
-     * "status": "success",
-     * "message": "Account deleted successfully."
-     * }
-     * 
-     * @response 500 scenario="Server Error" {
-     * "status": "error",
-     * "message": "An error occurred while deleting the account. Please try again."
-     * }
-     */
+
 
     public function deleteAccount(Request $request){
         try {
