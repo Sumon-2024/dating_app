@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Dating App",
-        "_postman_id": "0ac39e1b-7d56-48e0-bac4-e7bb6d55c106",
+        "_postman_id": "c6b47b3f-9093-42b4-bec2-5b3430043064",
         "description": "This is the API documentation for the Dating App",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"email\":\"user@example.com\",\"password\":\"123456789\"}"
+                            "raw": "{\"email\":\"admin@gmail.com\",\"password\":\"123456789\"}"
                         },
                         "description": "",
                         "auth": {
@@ -52,20 +52,20 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"Login successful\",\n\"data\": {\n  \"token\": \" \"\n }\n}",
-                            "name": "Successful Login"
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Login successful.\",\n  \"data\": {\n      \"token\": \"1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z\",\n      \"user\": {\n          \"id\": 1,\n          \"name\": \"admin\",\n          \"email\": \"admin@gmail.com\"\n      }\n  }\n}",
+                            "name": "success"
                         },
                         {
                             "header": [],
                             "code": 401,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"The provided credentials are incorrect.\"\n}",
-                            "name": "Invalid Credentials"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Invalid credentials. Please try again.\"\n}",
+                            "name": "unauthorized"
                         },
                         {
                             "header": [],
                             "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred during login. Please try again.\"\n}",
-                            "name": "Server Error"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred during login. Please try again.\"\n}",
+                            "name": "error"
                         }
                     ]
                 },
@@ -99,20 +99,20 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"Logged out successfully.\"\n}",
-                            "name": "Successful Logout"
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Logout successful.\",\n  \"data\": {\n      \"message\": \"Logged out successfully.\"\n  }\n}",
+                            "name": "success"
                         },
                         {
                             "header": [],
                             "code": 401,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"Unauthorized\"\n}",
-                            "name": "Unauthorized"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unauthorized.\"\n}",
+                            "name": "unauthorized"
                         },
                         {
                             "header": [],
                             "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while logging out. Please try again.\"\n}",
-                            "name": "Server Error"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred while logging out. Please try again.\"\n}",
+                            "name": "error"
                         }
                     ]
                 },
@@ -146,69 +146,31 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"User retrieved successfully\",\n\"data\": {\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
-                            "name": "Successful User Retrieval"
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"User information retrieved successfully.\",\n  \"data\": {\n      \"id\": 1,\n      \"name\": \"admin\",\n      \"email\": \"admin@gmail.com\",\n      \"email_verified_at\": null,\n      \"created_at\": \"2024-11-30T03:40:17.000000Z\",\n      \"updated_at\": \"2024-11-30T03:40:17.000000Z\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unauthorized.\"\n}",
+                            "name": "unauthorized"
                         },
                         {
                             "header": [],
                             "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while retrieving the user. Please try again.\"\n}",
-                            "name": "Server Error"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred while retrieving the user. Please try again.\"\n}",
+                            "name": "error"
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/user\/update",
+                    "name": "POST api\/user\/profile\/edit",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/user\/update",
+                            "path": "api\/user\/profile\/edit",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/user\/update"
-                        },
-                        "method": "PUT",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"password\":\"12345678\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"Profile updated successfully.\",\n\"data\": {\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
-                            "name": "Successful Profile Update"
-                        },
-                        {
-                            "header": [],
-                            "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
-                            "name": "Server Error"
-                        }
-                    ]
-                },
-                {
-                    "name": "POST api\/user\/edit",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/user\/edit",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/user\/edit"
+                            "raw": "{{baseUrl}}\/api\/user\/profile\/edit"
                         },
                         "method": "POST",
                         "header": [
@@ -223,7 +185,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"password\":\"12345678\",\"confirm-password\":\"12345678\"}"
+                            "raw": "{\"name\":\"\\\"Admin\\\"\",\"email\":\"\\\"admin@example.com\\\"\",\"password\":\"\\\"newpassword123\\\"\",\"password_confirmation\":\"\\\"newpassword123\\\"\"}"
                         },
                         "description": "",
                         "auth": {
@@ -234,25 +196,93 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"Profile updated successfully.\",\n\"data\": {\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}\n}",
-                            "name": "Successful Profile Edit"
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Success\",\n  \"data\": {\n      \"message\": \"Profile updated successfully.\",\n      \"data\": {\n          \"id\": 1,\n          \"name\": \"Admin\",\n          \"email\": \"admin@example.com\",\n          \"email_verified_at\": null,\n          \"created_at\": \"2024-11-30T03:40:17.000000Z\",\n          \"updated_at\": \"2024-11-30T05:18:57.000000Z\"\n      }\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Invalid data provided. Please check your inputs.\"\n}",
+                            "name": "error"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unauthorized. You must be logged in to update your profile.\"\n}",
+                            "name": "unauthorized"
                         },
                         {
                             "header": [],
                             "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
-                            "name": "Server Error"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
+                            "name": "error"
                         }
                     ]
                 },
                 {
-                    "name": "DELETE api\/user\/delete",
+                    "name": "PUT api\/user\/profile\/update",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/user\/delete",
+                            "path": "api\/user\/profile\/update",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/user\/delete"
+                            "raw": "{{baseUrl}}\/api\/user\/profile\/update"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"\\\"Admin\\\"\",\"email\":\"\\\"admin@example.com\\\"\",\"password\":\"\\\"newpassword123\\\"\",\"password_confirmation\":\"\\\"newpassword123\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Success\",\n  \"data\": {\n      \"message\": \"Profile updated successfully.\",\n      \"data\": {\n          \"id\": 1,\n          \"name\": \"Admin\",\n          \"email\": \"admin@gmail.com\",\n          \"email_verified_at\": null,\n          \"created_at\": \"2024-11-30T05:36:54.000000Z\",\n          \"updated_at\": \"2024-11-30T05:43:56.000000Z\"\n      }\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Invalid data provided. Please check your inputs.\"\n}",
+                            "name": "error"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unauthorized. You must be logged in to update your profile.\"\n}",
+                            "name": "unauthorized"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred while updating the profile. Please try again.\"\n}",
+                            "name": "error"
+                        }
+                    ]
+                },
+                {
+                    "name": "DELETE api\/user\/profile\/delete",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user\/profile\/delete",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user\/profile\/delete"
                         },
                         "method": "DELETE",
                         "header": [
@@ -275,14 +305,20 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n\"status\": \"success\",\n\"message\": \"Account deleted successfully.\"\n}",
-                            "name": "Successful Account Deletion"
+                            "body": "{\n  \"status\": \"success\",\n  \"message\": \"Success\",\n  \"data\": {\n      \"message\": \"Account deleted successfully.\"\n  }\n}",
+                            "name": "success"
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"Unauthorized. You must be logged in to delete your account.\"\n}",
+                            "name": "unauthorized"
                         },
                         {
                             "header": [],
                             "code": 500,
-                            "body": "{\n\"status\": \"error\",\n\"message\": \"An error occurred while deleting the account. Please try again.\"\n}",
-                            "name": "Server Error"
+                            "body": "{\n  \"status\": \"error\",\n  \"message\": \"An error occurred while deleting the account. Please try again.\"\n}",
+                            "name": "error"
                         }
                     ]
                 }

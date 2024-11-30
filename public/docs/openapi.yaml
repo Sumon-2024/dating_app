@@ -15,47 +15,63 @@ paths:
       parameters: []
       responses:
         200:
-          description: 'Successful Login'
+          description: success
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: success
-                  message: 'Login successful'
+                  message: 'Login successful.'
                   data:
-                    token: ' '
+                    token: 1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z
+                    user:
+                      id: 1
+                      name: admin
+                      email: admin@gmail.com
                 properties:
                   status:
                     type: string
                     example: success
                   message:
                     type: string
-                    example: 'Login successful'
+                    example: 'Login successful.'
                   data:
                     type: object
                     properties:
                       token:
                         type: string
-                        example: ' '
+                        example: 1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: admin
+                          email:
+                            type: string
+                            example: admin@gmail.com
         401:
-          description: 'Invalid Credentials'
+          description: unauthorized
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: error
-                  message: 'The provided credentials are incorrect.'
+                  message: 'Invalid credentials. Please try again.'
                 properties:
                   status:
                     type: string
                     example: error
                   message:
                     type: string
-                    example: 'The provided credentials are incorrect.'
+                    example: 'Invalid credentials. Please try again.'
         500:
-          description: 'Server Error'
+          description: error
           content:
             application/json:
               schema:
@@ -81,12 +97,12 @@ paths:
               properties:
                 email:
                   type: string
-                  description: ''
-                  example: user@example.com
+                  description: 'The email address of the user.'
+                  example: admin@gmail.com
                   nullable: false
                 password:
                   type: string
-                  description: ''
+                  description: 'The password of the user.'
                   example: '123456789'
                   nullable: false
               required:
@@ -101,39 +117,47 @@ paths:
       parameters: []
       responses:
         200:
-          description: 'Successful Logout'
+          description: success
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: success
-                  message: 'Logged out successfully.'
+                  message: 'Logout successful.'
+                  data:
+                    message: 'Logged out successfully.'
                 properties:
                   status:
                     type: string
                     example: success
                   message:
                     type: string
-                    example: 'Logged out successfully.'
+                    example: 'Logout successful.'
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Logged out successfully.'
         401:
-          description: Unauthorized
+          description: unauthorized
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: error
-                  message: Unauthorized
+                  message: Unauthorized.
                 properties:
                   status:
                     type: string
                     example: error
                   message:
                     type: string
-                    example: Unauthorized
+                    example: Unauthorized.
         500:
-          description: 'Server Error'
+          description: error
           content:
             application/json:
               schema:
@@ -159,25 +183,28 @@ paths:
       parameters: []
       responses:
         200:
-          description: 'Successful User Retrieval'
+          description: success
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: success
-                  message: 'User retrieved successfully'
+                  message: 'User information retrieved successfully.'
                   data:
                     id: 1
-                    name: 'John Doe'
-                    email: john.doe@example.com
+                    name: admin
+                    email: admin@gmail.com
+                    email_verified_at: null
+                    created_at: '2024-11-30T03:40:17.000000Z'
+                    updated_at: '2024-11-30T03:40:17.000000Z'
                 properties:
                   status:
                     type: string
                     example: success
                   message:
                     type: string
-                    example: 'User retrieved successfully'
+                    example: 'User information retrieved successfully.'
                   data:
                     type: object
                     properties:
@@ -186,12 +213,37 @@ paths:
                         example: 1
                       name:
                         type: string
-                        example: 'John Doe'
+                        example: admin
                       email:
                         type: string
-                        example: john.doe@example.com
+                        example: admin@gmail.com
+                      email_verified_at:
+                        type: string
+                        example: null
+                      created_at:
+                        type: string
+                        example: '2024-11-30T03:40:17.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-11-30T03:40:17.000000Z'
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: Unauthorized.
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Unauthorized.
         500:
-          description: 'Server Error'
+          description: error
           content:
             application/json:
               schema:
@@ -209,122 +261,99 @@ paths:
       tags:
         - Endpoints
       security: []
-  /api/user/update:
-    put:
-      summary: ''
-      operationId: putApiUserUpdate
-      description: ''
-      parameters: []
-      responses:
-        200:
-          description: 'Successful Profile Update'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: success
-                  message: 'Profile updated successfully.'
-                  data:
-                    name: 'John Doe'
-                    email: john.doe@example.com
-                properties:
-                  status:
-                    type: string
-                    example: success
-                  message:
-                    type: string
-                    example: 'Profile updated successfully.'
-                  data:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: 'John Doe'
-                      email:
-                        type: string
-                        example: john.doe@example.com
-        500:
-          description: 'Server Error'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: error
-                  message: 'An error occurred while updating the profile. Please try again.'
-                properties:
-                  status:
-                    type: string
-                    example: error
-                  message:
-                    type: string
-                    example: 'An error occurred while updating the profile. Please try again.'
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: ''
-                  example: 'John Doe'
-                  nullable: false
-                email:
-                  type: string
-                  description: ''
-                  example: john.doe@example.com
-                  nullable: false
-                password:
-                  type: string
-                  description: optional
-                  example: '12345678'
-                  nullable: false
-              required:
-                - name
-                - email
-      security: []
-  /api/user/edit:
+  /api/user/profile/edit:
     post:
       summary: ''
-      operationId: postApiUserEdit
+      operationId: postApiUserProfileEdit
       description: ''
       parameters: []
       responses:
         200:
-          description: 'Successful Profile Edit'
+          description: success
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: success
-                  message: 'Profile updated successfully.'
+                  message: Success
                   data:
-                    name: 'John Doe'
-                    email: john.doe@example.com
+                    message: 'Profile updated successfully.'
+                    data:
+                      id: 1
+                      name: Admin
+                      email: admin@example.com
+                      email_verified_at: null
+                      created_at: '2024-11-30T03:40:17.000000Z'
+                      updated_at: '2024-11-30T05:18:57.000000Z'
                 properties:
                   status:
                     type: string
                     example: success
                   message:
                     type: string
-                    example: 'Profile updated successfully.'
+                    example: Success
                   data:
                     type: object
                     properties:
-                      name:
+                      message:
                         type: string
-                        example: 'John Doe'
-                      email:
-                        type: string
-                        example: john.doe@example.com
+                        example: 'Profile updated successfully.'
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Admin
+                          email:
+                            type: string
+                            example: admin@example.com
+                          email_verified_at:
+                            type: string
+                            example: null
+                          created_at:
+                            type: string
+                            example: '2024-11-30T03:40:17.000000Z'
+                          updated_at:
+                            type: string
+                            example: '2024-11-30T05:18:57.000000Z'
+        400:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Invalid data provided. Please check your inputs.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Invalid data provided. Please check your inputs.'
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Unauthorized. You must be logged in to update your profile.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Unauthorized. You must be logged in to update your profile.'
         500:
-          description: 'Server Error'
+          description: error
           content:
             application/json:
               schema:
@@ -350,53 +379,217 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: 'John Doe'
+                  description: 'The name of the user.'
+                  example: '"Admin"'
                   nullable: false
                 email:
                   type: string
-                  description: ''
-                  example: john.doe@example.com
+                  description: 'The email address of the user.'
+                  example: '"admin@example.com"'
                   nullable: false
                 password:
                   type: string
-                  description: optional
-                  example: '12345678'
+                  description: 'nullable The new password for the user. Minimum of 6 characters.'
+                  example: '"newpassword123"'
                   nullable: false
-                confirm-password:
+                password_confirmation:
                   type: string
-                  description: optional
-                  example: '12345678'
+                  description: 'nullable Confirmation of the new password. This field is required if the password is provided.'
+                  example: '"newpassword123"'
                   nullable: false
               required:
                 - name
                 - email
       security: []
-  /api/user/delete:
-    delete:
+  /api/user/profile/update:
+    put:
       summary: ''
-      operationId: deleteApiUserDelete
+      operationId: putApiUserProfileUpdate
       description: ''
       parameters: []
       responses:
         200:
-          description: 'Successful Account Deletion'
+          description: success
           content:
             application/json:
               schema:
                 type: object
                 example:
                   status: success
-                  message: 'Account deleted successfully.'
+                  message: Success
+                  data:
+                    message: 'Profile updated successfully.'
+                    data:
+                      id: 1
+                      name: Admin
+                      email: admin@gmail.com
+                      email_verified_at: null
+                      created_at: '2024-11-30T05:36:54.000000Z'
+                      updated_at: '2024-11-30T05:43:56.000000Z'
                 properties:
                   status:
                     type: string
                     example: success
                   message:
                     type: string
-                    example: 'Account deleted successfully.'
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Profile updated successfully.'
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Admin
+                          email:
+                            type: string
+                            example: admin@gmail.com
+                          email_verified_at:
+                            type: string
+                            example: null
+                          created_at:
+                            type: string
+                            example: '2024-11-30T05:36:54.000000Z'
+                          updated_at:
+                            type: string
+                            example: '2024-11-30T05:43:56.000000Z'
+        400:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Invalid data provided. Please check your inputs.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Invalid data provided. Please check your inputs.'
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Unauthorized. You must be logged in to update your profile.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Unauthorized. You must be logged in to update your profile.'
         500:
-          description: 'Server Error'
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while updating the profile. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while updating the profile. Please try again.'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: '"Admin"'
+                  nullable: false
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: '"admin@example.com"'
+                  nullable: false
+                password:
+                  type: string
+                  description: 'nullable The new password for the user. Minimum of 6 characters.'
+                  example: '"newpassword123"'
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: 'nullable Confirmation of the new password. This field is required if the password is provided.'
+                  example: '"newpassword123"'
+                  nullable: false
+              required:
+                - name
+                - email
+      security: []
+  /api/user/profile/delete:
+    delete:
+      summary: ''
+      operationId: deleteApiUserProfileDelete
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: Success
+                  data:
+                    message: 'Account deleted successfully.'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Account deleted successfully.'
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Unauthorized. You must be logged in to delete your account.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Unauthorized. You must be logged in to delete your account.'
+        500:
+          description: error
           content:
             application/json:
               schema:

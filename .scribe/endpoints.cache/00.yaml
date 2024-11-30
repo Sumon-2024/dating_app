@@ -26,9 +26,9 @@ endpoints:
     bodyParameters:
       email:
         name: email
-        description: ''
+        description: 'The email address of the user.'
         required: true
-        example: user@example.com
+        example: admin@gmail.com
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -36,7 +36,7 @@ endpoints:
         custom: []
       password:
         name: password
-        description: ''
+        description: 'The password of the user.'
         required: true
         example: '123456789'
         type: string
@@ -45,7 +45,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: user@example.com
+      email: admin@gmail.com
       password: '123456789'
     fileParameters: []
     responses:
@@ -53,34 +53,39 @@ endpoints:
         status: 200
         content: |-
           {
-          "status": "success",
-          "message": "Login successful",
-          "data": {
-            "token": " "
-           }
+            "status": "success",
+            "message": "Login successful.",
+            "data": {
+                "token": "1|T8cDp5zUoS1NriCCU5z1Qkla3A48k5TS8NaELM1Z",
+                "user": {
+                    "id": 1,
+                    "name": "admin",
+                    "email": "admin@gmail.com"
+                }
+            }
           }
         headers: []
-        description: 'Successful Login'
+        description: success
         custom: []
       -
         status: 401
         content: |-
           {
-          "status": "error",
-          "message": "The provided credentials are incorrect."
+            "status": "error",
+            "message": "Invalid credentials. Please try again."
           }
         headers: []
-        description: 'Invalid Credentials'
+        description: unauthorized
         custom: []
       -
         status: 500
         content: |-
           {
-          "status": "error",
-          "message": "An error occurred during login. Please try again."
+            "status": "error",
+            "message": "An error occurred during login. Please try again."
           }
         headers: []
-        description: 'Server Error'
+        description: error
         custom: []
     responseFields: []
     auth: []
@@ -116,31 +121,34 @@ endpoints:
         status: 200
         content: |-
           {
-          "status": "success",
-          "message": "Logged out successfully."
+            "status": "success",
+            "message": "Logout successful.",
+            "data": {
+                "message": "Logged out successfully."
+            }
           }
         headers: []
-        description: 'Successful Logout'
+        description: success
         custom: []
       -
         status: 401
         content: |-
           {
-          "status": "error",
-          "message": "Unauthorized"
+            "status": "error",
+            "message": "Unauthorized."
           }
         headers: []
-        description: Unauthorized
+        description: unauthorized
         custom: []
       -
         status: 500
         content: |-
           {
-          "status": "error",
-          "message": "An error occurred while logging out. Please try again."
+            "status": "error",
+            "message": "An error occurred while logging out. Please try again."
           }
         headers: []
-        description: 'Server Error'
+        description: error
         custom: []
     responseFields: []
     auth: []
@@ -176,113 +184,39 @@ endpoints:
         status: 200
         content: |-
           {
-          "status": "success",
-          "message": "User retrieved successfully",
-          "data": {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john.doe@example.com"
-          }
+            "status": "success",
+            "message": "User information retrieved successfully.",
+            "data": {
+                "id": 1,
+                "name": "admin",
+                "email": "admin@gmail.com",
+                "email_verified_at": null,
+                "created_at": "2024-11-30T03:40:17.000000Z",
+                "updated_at": "2024-11-30T03:40:17.000000Z"
+            }
           }
         headers: []
-        description: 'Successful User Retrieval'
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Unauthorized."
+          }
+        headers: []
+        description: unauthorized
         custom: []
       -
         status: 500
         content: |-
           {
-          "status": "error",
-          "message": "An error occurred while retrieving the user. Please try again."
+            "status": "error",
+            "message": "An error occurred while retrieving the user. Please try again."
           }
         headers: []
-        description: 'Server Error'
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-    uri: api/user/update
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        name: name
-        description: ''
-        required: true
-        example: 'John Doe'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      email:
-        name: email
-        description: ''
-        required: true
-        example: john.doe@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-      password:
-        name: password
-        description: optional
-        required: false
-        example: '12345678'
-        type: string
-        enumValues: []
-        exampleWasSpecified: true
-        nullable: false
-        custom: []
-    cleanBodyParameters:
-      name: 'John Doe'
-      email: john.doe@example.com
-      password: '12345678'
-    fileParameters: []
-    responses:
-      -
-        status: 200
-        content: |-
-          {
-          "status": "success",
-          "message": "Profile updated successfully.",
-          "data": {
-            "name": "John Doe",
-            "email": "john.doe@example.com"
-          }
-          }
-        headers: []
-        description: 'Successful Profile Update'
-        custom: []
-      -
-        status: 500
-        content: |-
-          {
-          "status": "error",
-          "message": "An error occurred while updating the profile. Please try again."
-          }
-        headers: []
-        description: 'Server Error'
+        description: error
         custom: []
     responseFields: []
     auth: []
@@ -293,7 +227,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/user/edit
+    uri: api/user/profile/edit
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -313,9 +247,9 @@ endpoints:
     bodyParameters:
       name:
         name: name
-        description: ''
+        description: 'The name of the user.'
         required: true
-        example: 'John Doe'
+        example: '"Admin"'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -323,9 +257,9 @@ endpoints:
         custom: []
       email:
         name: email
-        description: ''
+        description: 'The email address of the user.'
         required: true
-        example: john.doe@example.com
+        example: '"admin@example.com"'
         type: string
         enumValues: []
         exampleWasSpecified: true
@@ -333,54 +267,206 @@ endpoints:
         custom: []
       password:
         name: password
-        description: optional
+        description: 'nullable The new password for the user. Minimum of 6 characters.'
         required: false
-        example: '12345678'
+        example: '"newpassword123"'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         custom: []
-      confirm-password:
-        name: confirm-password
-        description: optional
+      password_confirmation:
+        name: password_confirmation
+        description: 'nullable Confirmation of the new password. This field is required if the password is provided.'
         required: false
-        example: '12345678'
+        example: '"newpassword123"'
         type: string
         enumValues: []
         exampleWasSpecified: true
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: 'John Doe'
-      email: john.doe@example.com
-      password: '12345678'
-      confirm-password: '12345678'
+      name: '"Admin"'
+      email: '"admin@example.com"'
+      password: '"newpassword123"'
+      password_confirmation: '"newpassword123"'
     fileParameters: []
     responses:
       -
         status: 200
         content: |-
           {
-          "status": "success",
-          "message": "Profile updated successfully.",
-          "data": {
-            "name": "John Doe",
-            "email": "john.doe@example.com"
-          }
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Profile updated successfully.",
+                "data": {
+                    "id": 1,
+                    "name": "Admin",
+                    "email": "admin@example.com",
+                    "email_verified_at": null,
+                    "created_at": "2024-11-30T03:40:17.000000Z",
+                    "updated_at": "2024-11-30T05:18:57.000000Z"
+                }
+            }
           }
         headers: []
-        description: 'Successful Profile Edit'
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "Invalid data provided. Please check your inputs."
+          }
+        headers: []
+        description: error
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Unauthorized. You must be logged in to update your profile."
+          }
+        headers: []
+        description: unauthorized
         custom: []
       -
         status: 500
         content: |-
           {
-          "status": "error",
-          "message": "An error occurred while updating the profile. Please try again."
+            "status": "error",
+            "message": "An error occurred while updating the profile. Please try again."
           }
         headers: []
-        description: 'Server Error'
+        description: error
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/user/profile/update
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the user.'
+        required: true
+        example: '"Admin"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'The email address of the user.'
+        required: true
+        example: '"admin@example.com"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password:
+        name: password
+        description: 'nullable The new password for the user. Minimum of 6 characters.'
+        required: false
+        example: '"newpassword123"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'nullable Confirmation of the new password. This field is required if the password is provided.'
+        required: false
+        example: '"newpassword123"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: '"Admin"'
+      email: '"admin@example.com"'
+      password: '"newpassword123"'
+      password_confirmation: '"newpassword123"'
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Profile updated successfully.",
+                "data": {
+                    "id": 1,
+                    "name": "Admin",
+                    "email": "admin@gmail.com",
+                    "email_verified_at": null,
+                    "created_at": "2024-11-30T05:36:54.000000Z",
+                    "updated_at": "2024-11-30T05:43:56.000000Z"
+                }
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "Invalid data provided. Please check your inputs."
+          }
+        headers: []
+        description: error
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Unauthorized. You must be logged in to update your profile."
+          }
+        headers: []
+        description: unauthorized
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "An error occurred while updating the profile. Please try again."
+          }
+        headers: []
+        description: error
         custom: []
     responseFields: []
     auth: []
@@ -391,7 +477,7 @@ endpoints:
   -
     httpMethods:
       - DELETE
-    uri: api/user/delete
+    uri: api/user/profile/delete
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -416,21 +502,34 @@ endpoints:
         status: 200
         content: |-
           {
-          "status": "success",
-          "message": "Account deleted successfully."
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Account deleted successfully."
+            }
           }
         headers: []
-        description: 'Successful Account Deletion'
+        description: success
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Unauthorized. You must be logged in to delete your account."
+          }
+        headers: []
+        description: unauthorized
         custom: []
       -
         status: 500
         content: |-
           {
-          "status": "error",
-          "message": "An error occurred while deleting the account. Please try again."
+            "status": "error",
+            "message": "An error occurred while deleting the account. Please try again."
           }
         headers: []
-        description: 'Server Error'
+        description: error
         custom: []
     responseFields: []
     auth: []
