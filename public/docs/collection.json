@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Dating App",
-        "_postman_id": "c6b47b3f-9093-42b4-bec2-5b3430043064",
+        "_postman_id": "88785222-8833-4854-8f69-6c7f8070fa28",
         "description": "This is the API documentation for the Dating App",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -68,6 +68,68 @@
                             "name": "error"
                         }
                     ]
+                },
+                {
+                    "name": "POST api\/password\/email",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/password\/email",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/password\/email"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"emelie34@example.net\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/password\/reset",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/password\/reset",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/password\/reset"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"wyman.maximillian@example.com\",\"token\":\"ut\",\"password\":\"#`_<em\\\"4z]xk\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
                 },
                 {
                     "name": "POST api\/user\/logout",

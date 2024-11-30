@@ -109,6 +109,66 @@ paths:
                 - email
                 - password
       security: []
+  /api/password/email:
+    post:
+      summary: ''
+      operationId: postApiPasswordEmail
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: emelie34@example.net
+                  nullable: false
+              required:
+                - email
+      security: []
+  /api/password/reset:
+    post:
+      summary: ''
+      operationId: postApiPasswordReset
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: wyman.maximillian@example.com
+                  nullable: false
+                token:
+                  type: string
+                  description: ''
+                  example: ut
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters.'
+                  example: '#`_<em"4z]xk'
+                  nullable: false
+              required:
+                - email
+                - token
+                - password
+      security: []
   /api/user/logout:
     post:
       summary: ''
