@@ -359,5 +359,61 @@ class ApiAuthController extends BaseController
 
 
 
+    /**
+     * @method
+     * Change Password
+     * 
+     * @description Allows the logged-in user to change their password. The user needs to provide their current password and a new password.
+     * 
+     * @response scenario="success" {
+     *   "status": "success",
+     *   "message": "Success",
+     *   "data": {
+     *       "message": "Password changed successfully."
+     *   }
+     * }
+     * 
+     * @response 401 scenario="unauthorized" {
+     *   "status": "error",
+     *   "message": "Unauthorized. You must be logged in to change your password."
+     * }
+     * 
+     * @response 400 scenario="validation_error" {
+     *   "status": "error",
+     *   "message": "Validation error. Please provide valid current and new passwords."
+     * }
+     * 
+     * @response 500 scenario="error" {
+     *   "status": "error",
+     *   "message": "An error occurred while changing the password. Please try again."
+     * }
+     */
+
+    public function changePassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|confirmed|min:6',
+            ]);
+
+            $user = $request->user();
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return $this->errorResponse('The current password is incorrect.', 400);
+            }
+
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return $this->successResponse([
+                'message' => 'Password changed successfully.',
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Password change failed: ' . $e->getMessage());
+            return $this->errorResponse('An error occurred while changing the password. Please try again.', 500);
+        }
+    }
 
 }
