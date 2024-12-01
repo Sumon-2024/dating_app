@@ -114,18 +114,138 @@ endpoints:
     bodyParameters:
       email:
         name: email
-        description: 'Must be a valid email address.'
+        description: 'The email address of the user requesting the password reset.'
         required: true
-        example: emelie34@example.net
+        example: admin@gmail.com
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: emelie34@example.net
+      email: admin@gmail.com
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "We have emailed your password reset link."
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "Please wait before retrying."
+          }
+        headers: []
+        description: error
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "An error occurred during password reset. Please try again."
+          }
+        headers: []
+        description: error
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/password/reset
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      token:
+        name: token
+        description: 'The password reset token.'
+        required: true
+        example: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'The email address for which the reset is requested.'
+        required: true
+        example: admin@gmail.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      token: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+      email: admin@gmail.com
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Token and email retrieved successfully",
+                "token": "0accac5db371a2bf4ca0f4049f0a51fd49220e87e67ba76b3c525e342c429692",
+                "email": "admin@gmail.com"
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "Token and email are required"
+          }
+        headers: []
+        description: error
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "An error occurred while retrieving token and email. Please try again."
+          }
+        headers: []
+        description: error
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -135,7 +255,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/password/reset
+    uri: api/password/reset/post
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -153,42 +273,86 @@ endpoints:
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
-      email:
-        name: email
-        description: 'Must be a valid email address.'
-        required: true
-        example: wyman.maximillian@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
       token:
         name: token
-        description: ''
+        description: 'The password reset token.'
         required: true
-        example: ut
+        example: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'The email address associated with the password reset.'
+        required: true
+        example: admin@gmail.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         custom: []
       password:
         name: password
-        description: 'Must be at least 6 characters.'
+        description: 'The new password.'
         required: true
-        example: '#`_<em"4z]xk'
+        example: newpassword123
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'The confirmation of the new password.'
+        required: true
+        example: newpassword123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: wyman.maximillian@example.com
-      token: ut
-      password: '#`_<em"4z]xk'
+      token: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+      email: admin@gmail.com
+      password: newpassword123
+      password_confirmation: newpassword123
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Password reset successfully"
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "The password field must be at least 6 characters."
+          }
+        headers: []
+        description: error
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "An error occurred during password reset. Please try again."
+          }
+        headers: []
+        description: error
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -629,6 +793,79 @@ endpoints:
           {
             "status": "error",
             "message": "An error occurred while deleting the account. Please try again."
+          }
+        headers: []
+        description: error
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/user/change-password
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "message": "Success",
+            "data": {
+                "message": "Password changed successfully."
+            }
+          }
+        headers: []
+        description: success
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "status": "error",
+            "message": "Validation error. Please provide valid current and new passwords."
+          }
+        headers: []
+        description: validation_error
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+            "status": "error",
+            "message": "Unauthorized. You must be logged in to change your password."
+          }
+        headers: []
+        description: unauthorized
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "message": "An error occurred while changing the password. Please try again."
           }
         headers: []
         description: error

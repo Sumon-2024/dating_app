@@ -20,7 +20,6 @@ Route::middleware(['auth:sanctum'])->prefix('user')->group(function () {
     Route::put('/profile/update', [ApiAuthController::class, 'updateProfile'])->name('api.updateProfile');
     Route::delete('/profile/delete', [ApiAuthController::class, 'deleteAccount'])->name('api.deleteAccount');
 
-
     // Change password 
     Route::post('/change-password', [ApiAuthController::class, 'changePassword']);
 });

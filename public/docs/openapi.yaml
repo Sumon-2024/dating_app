@@ -115,7 +115,63 @@ paths:
       operationId: postApiPasswordEmail
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: Success
+                  data:
+                    message: 'We have emailed your password reset link.'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'We have emailed your password reset link.'
+        400:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Please wait before retrying.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Please wait before retrying.'
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred during password reset. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred during password reset. Please try again.'
       tags:
         - Endpoints
       requestBody:
@@ -127,19 +183,171 @@ paths:
               properties:
                 email:
                   type: string
-                  description: 'Must be a valid email address.'
-                  example: emelie34@example.net
+                  description: 'The email address of the user requesting the password reset.'
+                  example: admin@gmail.com
                   nullable: false
               required:
                 - email
       security: []
   /api/password/reset:
+    get:
+      summary: ''
+      operationId: getApiPasswordReset
+      description: ''
+      parameters:
+        -
+          in: query
+          name: token
+          description: 'The password reset token.'
+          example: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+          required: true
+          schema:
+            type: string
+            description: 'The password reset token.'
+            example: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+            nullable: false
+        -
+          in: query
+          name: email
+          description: 'The email address for which the reset is requested.'
+          example: admin@gmail.com
+          required: true
+          schema:
+            type: string
+            description: 'The email address for which the reset is requested.'
+            example: admin@gmail.com
+            nullable: false
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: Success
+                  data:
+                    message: 'Token and email retrieved successfully'
+                    token: 0accac5db371a2bf4ca0f4049f0a51fd49220e87e67ba76b3c525e342c429692
+                    email: admin@gmail.com
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Token and email retrieved successfully'
+                      token:
+                        type: string
+                        example: 0accac5db371a2bf4ca0f4049f0a51fd49220e87e67ba76b3c525e342c429692
+                      email:
+                        type: string
+                        example: admin@gmail.com
+        400:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Token and email are required'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Token and email are required'
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while retrieving token and email. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while retrieving token and email. Please try again.'
+      tags:
+        - Endpoints
+      security: []
+  /api/password/reset/post:
     post:
       summary: ''
-      operationId: postApiPasswordReset
+      operationId: postApiPasswordResetPost
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: Success
+                  data:
+                    message: 'Password reset successfully'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Password reset successfully'
+        400:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'The password field must be at least 6 characters.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'The password field must be at least 6 characters.'
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred during password reset. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred during password reset. Please try again.'
       tags:
         - Endpoints
       requestBody:
@@ -149,25 +357,31 @@ paths:
             schema:
               type: object
               properties:
-                email:
-                  type: string
-                  description: 'Must be a valid email address.'
-                  example: wyman.maximillian@example.com
-                  nullable: false
                 token:
                   type: string
-                  description: ''
-                  example: ut
+                  description: 'The password reset token.'
+                  example: 0254315374cd2a6a6d7868d9cd9b9a9742dc5f9d1034c06b0af14af81c16b5d5
+                  nullable: false
+                email:
+                  type: string
+                  description: 'The email address associated with the password reset.'
+                  example: admin@gmail.com
                   nullable: false
                 password:
                   type: string
-                  description: 'Must be at least 6 characters.'
-                  example: '#`_<em"4z]xk'
+                  description: 'The new password.'
+                  example: newpassword123
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: 'The confirmation of the new password.'
+                  example: newpassword123
                   nullable: false
               required:
-                - email
                 - token
+                - email
                 - password
+                - password_confirmation
       security: []
   /api/user/logout:
     post:
@@ -664,6 +878,88 @@ paths:
                   message:
                     type: string
                     example: 'An error occurred while deleting the account. Please try again.'
+      tags:
+        - Endpoints
+      security: []
+  /api/user/change-password:
+    post:
+      summary: ''
+      operationId: postApiUserChangePassword
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: Success
+                  data:
+                    message: 'Password changed successfully.'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Success
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: 'Password changed successfully.'
+        400:
+          description: validation_error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Validation error. Please provide valid current and new passwords.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Validation error. Please provide valid current and new passwords.'
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'Unauthorized. You must be logged in to change your password.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'Unauthorized. You must be logged in to change your password.'
+        500:
+          description: error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: error
+                  message: 'An error occurred while changing the password. Please try again.'
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: 'An error occurred while changing the password. Please try again.'
       tags:
         - Endpoints
       security: []
