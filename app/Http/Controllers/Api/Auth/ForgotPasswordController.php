@@ -26,27 +26,45 @@ class ForgotPasswordController extends BaseController
     }
 
 
+    public function resetForm(Request $request)
+    {
+        $token = $request->query('token');
+        $email = $request->query('email');
+    
+        if (!$token || !$email) {
+            return response()->json(['error' => 'Token and email are required'], 400);
+        }
+    
+        return response()->json([
+            'message' => 'Token and email retrieved successfully',
+            'token' => $token,
+            'email' => $email
+        ]);
+    }
+    
+   
+
     public function reset(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+        $request->validate([
             'token' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
         ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse($validator->errors(), 422); 
-        }
-
+    
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
-                $user->forceFill(['password' => Hash::make($password)])->save();
+                $user->password = Hash::make($password);
+                $user->save();
             }
         );
-
-        return $status == Password::PASSWORD_RESET
-            ? $this->successResponse(['message' => __($status)], 'Success', 200)
-            : $this->errorResponse(__($status), 400);
+    
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json(['message' => 'Password reset successfully'], 200);
+        }
+    
+        return response()->json(['error' => __($status)], 400);
     }
+    
 }

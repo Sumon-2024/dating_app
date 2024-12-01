@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 // Public routes
 Route::post('/login', [ApiAuthController::class, 'login'])->name('api.login');
 Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::post('/password/reset', [ForgotPasswordController::class, 'reset'])->name('password.reset');
+Route::get('/password/reset', [ForgotPasswordController::class, 'resetForm'])->name('password.reset');
+Route::post('/password/reset/post', [ForgotPasswordController::class, 'reset'])->name('password.reset.post');
 
 
 Route::middleware(['auth:sanctum'])->prefix('user')->group(function () {
