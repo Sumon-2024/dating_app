@@ -360,7 +360,7 @@ class ApiAuthController extends BaseController
 
 
     /**
-     * @method
+     * @method 
      * Change Password
      * 
      * @description Allows the logged-in user to change their password. The user needs to provide their current password and a new password.
