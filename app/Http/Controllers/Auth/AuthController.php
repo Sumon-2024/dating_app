@@ -12,4 +12,9 @@ class AuthController extends Controller
     {
         return view('frontend.auth.login');
     }
+
+    public function showRegistrationForm()
+    {
+        return view('frontend.auth.register');
+    }
 }

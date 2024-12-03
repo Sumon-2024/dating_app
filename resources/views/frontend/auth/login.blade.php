@@ -82,8 +82,6 @@
                                 </div>
                             </div>
                             <button type="submit" class="default-btn">Login</button>
-                            <div class="or-text"><span>Or</span></div>
-                            <button type="submit" class="google-btn">Log In with Google</button>
                         </form>
                     </div>
                 </div>
