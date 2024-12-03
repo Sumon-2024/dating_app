@@ -1,164 +1,112 @@
 <!doctype html>
-<html lang="en">
-
-
-<!-- Mirrored from codervent.com/syndron/demo/vertical/auth-basic-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jul 2023 03:58:38 GMT -->
+<html lang="ar" dir="rtl">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--favicon-->
-    <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
-    <!--plugins-->
-    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-    <link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-    <link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
-    <!-- loader-->
-    <link href="assets/css/pace.min.css" rel="stylesheet" />
-    <script src="assets/js/pace.min.js"></script>
-    <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-extended.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link href="assets/css/app.css" rel="stylesheet">
-    <link href="assets/css/icons.css" rel="stylesheet">
-    <title>Syndron - Bootstrap 5 Admin Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Links of CSS files -->
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/remixicon.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/magnific-popup.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/simplebar.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/metismenu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/rtl.css') }}">
+    <title>SEO Expate Bangladesh Ltd.</title>
+    <link rel="icon" type="image/png" href="{{ asset('frontend/assets/images/favicon.png') }}">
 </head>
 
-<body class="">
-    <!--wrapper-->
-    <div class="wrapper">
-        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-            <div class="container">
-                <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                    <div class="col mx-auto">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <div class="p-4">
-                                    <div class="mb-3 text-center">
-                                        <img src="assets/images/logo-icon.png" width="60" alt="" />
-                                    </div>
-                                    <div class="text-center mb-4">
-                                        <h5 class="">Syndron Admin</h5>
-                                        <p class="mb-0">Please log in to your account</p>
-                                    </div>
-                                    <div class="form-body">
-                                        <form method="POST" action="{{ route('login') }}" class="row g-3">
-                                            @csrf <!-- CSRF token for security -->
+<body>
 
-                                            <div class="col-12">
-                                                <label for="login" class="form-label">Email or Mobile Number</label>
-                                                <input type="text"
-                                                    class="form-control @error('login') is-invalid @enderror"
-                                                    id="login" name="login"
-                                                    placeholder="jhon@example.com or 1234567890"
-                                                    value="{{ old('login') }}" required>
-                                                @error('login')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+    <!-- Start Preloader Area -->
+    <div class="preloader-area">
+        <div class="spinner">
+            <div class="inner">
+                <div class="disc"></div>
+                <div class="disc"></div>
+                <div class="disc"></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Preloader Area -->
 
-                                            <div class="col-12">
-                                                <label for="inputChoosePassword" class="form-label">Password</label>
-                                                <div class="input-group" id="show_hide_password">
-                                                    <input type="password"
-                                                        class="form-control border-end-0 @error('password') is-invalid @enderror"
-                                                        id="inputChoosePassword" name="password"
-                                                        placeholder="Enter Password" required>
-                                                    <a href="javascript:;" class="input-group-text bg-transparent"><i
-                                                            class='bx bx-hide'></i></a>
-                                                </div>
-                                                @error('password')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="flexSwitchCheckChecked" name="remember">
-                                                    <label class="form-check-label"
-                                                        for="flexSwitchCheckChecked">Remember Me</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 text-end">
-                                                <a href="{{ route('password.request') }}">Forgot Password ?</a>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary">Sign in</button>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="text-center">
-                                                    <p class="mb-0">Don't have an account yet? <a
-                                                            href="{{ route('register') }}">Sign up here</a></p>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                    <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-                                        <hr />
-                                    </div>
-                                    <div class="list-inline contacts-social text-center">
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-facebook text-white border-0 rounded-3"><i
-                                                class="bx bxl-facebook"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-twitter text-white border-0 rounded-3"><i
-                                                class="bx bxl-twitter"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-google text-white border-0 rounded-3"><i
-                                                class="bx bxl-google"></i></a>
-                                        <a href="javascript:;"
-                                            class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i
-                                                class="bx bxl-linkedin"></i></a>
-                                    </div>
-
-                                </div>
+    <!-- Start Preloader Area -->
+    <div class="profile-authentication-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="profile-authentication-image">
+                        <div class="content-image">
+                            <div class="logo">
+                                <a href="index.html"><img src="assets/images/logo.png" alt="Zust"></a>
+                            </div>
+                            <div class="vector-image">
+                                <img src="assets/images/vector.png" alt="image">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--end row-->
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="login-form">
+                        <h2>Login</h2>
+
+                        <form>
+                            <div class="form-group">
+                                <label>Username or email</label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                            <div class="remember-me-wrap d-flex justify-content-between align-items-center">
+                                <p>
+                                    <input type="checkbox" id="test1">
+                                    <label for="test1">Remember me</label>
+                                </p>
+
+                                <div class="lost-your-password-wrap">
+                                    <a href="forgot-password.html" class="lost-your-password">Forgot password ?</a>
+                                </div>
+                            </div>
+                            <button type="submit" class="default-btn">Login</button>
+                            <div class="or-text"><span>Or</span></div>
+                            <button type="submit" class="google-btn">Log In with Google</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="home-btn-icon">
+            <a href="index.html"><i class="flaticon-home"></i></a>
+        </div>
     </div>
-    <!--end wrapper-->
-    <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <!--plugins-->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-    <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-    <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
-    <!--Password show & hide js -->
-    <script>
-        $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("bx-hide");
-                    $('#show_hide_password i').removeClass("bx-show");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("bx-hide");
-                    $('#show_hide_password i').addClass("bx-show");
-                }
-            });
-        });
-    </script>
-    <!--app JS-->
-    <script src="assets/js/app.js"></script>
+    <!-- End Preloader Area -->
+
+    <!-- Links of JS files -->
+    <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/metismenu.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+
 </body>
-
-
-<!-- Mirrored from codervent.com/syndron/demo/vertical/auth-basic-signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jul 2023 03:58:38 GMT -->
 
 </html>
