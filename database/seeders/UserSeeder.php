@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use App\Enums\RoleType;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -12,38 +14,42 @@ class UserSeeder extends Seeder
     {
         $superAdmin = User::create([
             'name' => 'Super Admin',
-            'email' => 'superadmin@example.com',
-            'password' => Hash::make('superadminpassword'),
-            'mobile_number' => '0123456789',
+            'email' => 'superadmin@gmail.com',
+            'mobile_number' => '1234567890',
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt('123456789'),
+            'remember_token' => Str::random(10),
         ]);
-        $superAdmin->assignRole('super-admin');
+        $superAdmin->assignRole(RoleType::SUPER_ADMIN);
 
         $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('adminpassword'),
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'mobile_number' => '0987654321',
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt('123456789'),
+            'remember_token' => Str::random(10),
         ]);
-        $admin->assignRole('admin');
+        $admin->assignRole(RoleType::ADMIN);
+
+        $moderator = User::create([
+            'name' => 'Moderator',
+            'email' => 'moderator@gmail.com',
+            'mobile_number' => '1122334455',
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt('123456789'),
+            'remember_token' => Str::random(10),
+        ]);
+        $moderator->assignRole(RoleType::MODERATOR);
 
         $user = User::create([
-            'name' => 'Regular User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('userpassword'),
-            'mobile_number' => '1122334455',
+            'name' => 'User',
+            'email' => 'user@gmail.com',
+            'mobile_number' => '5566778899',
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt('123456789'),
+            'remember_token' => Str::random(10),
         ]);
-        $user->assignRole('user');
-
-        $faker = \Faker\Factory::create();
-
-        for ($i = 0; $i < 10; $i++) {
-            $randomUser = User::create([
-                'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail,
-                'password' => Hash::make('123456789'),
-                'mobile_number' => $faker->phoneNumber,
-            ]);
-            $randomUser->assignRole('user');
-        }
+        $user->assignRole(RoleType::USER);
     }
 }

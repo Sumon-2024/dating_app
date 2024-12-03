@@ -66,35 +66,61 @@
                     <div class="register-form">
                         <h2>Register</h2>
 
-                        <form>
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+
+                            <!-- Name -->
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control">
+                                <label for="name">Name</label>
+                                <input id="name" type="text" name="name" :value="old('name')" required
+                                    autofocus autocomplete="name" class="form-control">
+                                @if ($errors->has('name'))
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Email Address -->
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email" :value="old('email')" required
+                                    autocomplete="username" class="form-control">
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Password -->
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password" required
+                                    autocomplete="new-password" class="form-control">
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Confirm Password -->
                             <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control">
+                                <label for="password_confirmation">Confirm Password</label>
+                                <input id="password_confirmation" type="password" name="password_confirmation" required
+                                    autocomplete="new-password" class="form-control">
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Privacy Checkbox -->
                             <div class="remember-me-wrap">
                                 <p>
-                                    <input type="checkbox" id="test1">
+                                    <input type="checkbox" id="test1" name="privacy" required>
                                     <label for="test1">I Accept The <a href="privacy.html">Privacy</a></label>
                                 </p>
                             </div>
+
+                            <!-- Submit Button -->
                             <button type="submit" class="default-btn">Register</button>
                         </form>
+
                     </div>
                 </div>
             </div>

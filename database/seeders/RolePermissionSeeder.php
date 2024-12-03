@@ -2,53 +2,52 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
-
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\RoleType;
 
 class RolePermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        // Create permissions
-        $permission1 = Permission::create(['name' => 'view dashboard']);
-        $permission2 = Permission::create(['name' => 'edit user']);
-        $permission3 = Permission::create(['name' => 'delete user']);
-        $permission4 = Permission::create(['name' => 'create post']);
-        $permission5 = Permission::create(['name' => 'edit post']);
-        $permission6 = Permission::create(['name' => 'delete post']);
-        $permission7 = Permission::create(['name' => 'view post']);
-
         // Create roles
-        $superAdmin = Role::create(['name' => 'super-admin']);
-        $admin = Role::create(['name' => 'admin']);
-        $user = Role::create(['name' => 'user']);
+        $superAdmin = Role::create(['name' => RoleType::SUPER_ADMIN]);
+        $admin = Role::create(['name' => RoleType::ADMIN]);
+        $moderator = Role::create(['name' => RoleType::MODERATOR]);
+        $user = Role::create(['name' => RoleType::USER]);
 
-        // Assign permissions to roles
+        // Create permissions
+        $permissions = [
+            'role.index',
+            'role.create',
+            'role.edit',
+            'role.update',
+            'role.delete',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
         $superAdmin->givePermissionTo(Permission::all());
-        $admin->givePermissionTo([$permission1, $permission2, $permission4, $permission5, $permission7]);
-        $user->givePermissionTo([$permission1, $permission7]);
 
-        // Assign roles to users
-        $superAdminUser = User::find(1);
-        if ($superAdminUser) {
-            $superAdminUser->assignRole('super-admin');
-        }
+        $admin->givePermissionTo([
+            'role.index',
+            'role.create',
+            'role.edit',
+            'role.update',
+            'role.delete',
+        ]);
 
-        $adminUser = User::find(2);
-        if ($adminUser) {
-            $adminUser->assignRole('admin');
-        }
+        $moderator->givePermissionTo([
+            'role.index',
+            'role.edit',
+        ]);
 
-        $regularUser = User::find(3);
-        if ($regularUser) {
-            $regularUser->assignRole('user');
-        }
+        $user->givePermissionTo([
+            'role.index',
+        ]);
     }
 }
