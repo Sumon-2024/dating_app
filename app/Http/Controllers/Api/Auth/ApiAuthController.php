@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class ApiAuthController extends BaseController
 {
-
     /**
      * @method
      * Handles user login and generates an authentication token upon successful login.
      * 
-     * @description Validates user credentials and generates a token for authentication. Returns an error if the credentials are invalid or any exception occurs during the process.
+     * @description Validates user credentials (email or mobile number) and generates a token for authentication. Returns an error if the credentials are invalid or any exception occurs.
      * 
-     * @bodyParam email string required The email address of the user. Example: admin@gmail.com
+     * @bodyParam login string required The email or mobile number of the user. Example: admin@gmail.com or 1234567890
      * @bodyParam password string required The password of the user. Example: 123456789
      * 
      * @response scenario="success" {
@@ -30,7 +29,8 @@ class ApiAuthController extends BaseController
      *       "user": {
      *           "id": 1,
      *           "name": "admin",
-     *           "email": "admin@gmail.com"
+     *           "email": "admin@gmail.com",
+     *           "mobile_number": "0123456789"
      *       }
      *   }
      * }
@@ -52,16 +52,22 @@ class ApiAuthController extends BaseController
      
          try {
              $request->validate([
-                 'email' => 'required|email',
-                 'password' => 'required',
+                // Can be email or mobile number
+                 'login' => 'required|string', 
+                 'password' => 'required|string',
              ]);
      
-             $user = User::where('email', $request->email)->first();
+             // Determine if login is email or mobile number
+             $loginField = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile_number';
+     
+             // Find user by email or mobile number
+             $user = User::where($loginField, $request->login)->first();
      
              if (!$user || !Hash::check($request->password, $user->password)) {
                  return $this->errorResponse('Invalid credentials. Please try again.', 401);
              }
      
+             // Generate token
              $token = $user->createToken('auth_token')->plainTextToken;
      
              DB::commit();
@@ -71,13 +77,14 @@ class ApiAuthController extends BaseController
                  'user' => [
                      'id' => $user->id,
                      'name' => $user->name,
-                     'email' => $user->email
-                 ]
+                     'email' => $user->email,
+                     'mobile_number' => $user->mobile_number,
+                 ],
              ]);
      
          } catch (\Exception $e) {
              DB::rollBack();
-             Log::error('Login failed for email: ' . $request->email . ', Error: ' . $e->getMessage());
+             Log::error('Login failed: ' . $e->getMessage());
              return $this->errorResponse('An error occurred during login. Please try again.', 500);
          }
      }
