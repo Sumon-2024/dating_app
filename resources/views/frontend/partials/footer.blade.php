@@ -16,8 +16,8 @@
 <!-- End Go Top Area -->
 
 <!-- Links of JS files -->
-<script data-cfasync="false" src="{{ asset('cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}">
-</script>
+<script data-cfasync="false"
+    src="{{ asset('frontend/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/jquery.magnific-popup.min.js') }}"></script>
