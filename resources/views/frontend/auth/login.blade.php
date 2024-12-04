@@ -40,16 +40,18 @@
 
     <!-- Start Preloader Area -->
     <div class="profile-authentication-area">
-        <div class="container">
+        <div class="container my-5">
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="profile-authentication-image">
                         <div class="content-image">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/images/logo.png" alt="Zust"></a>
+                                <a href="index.html">
+                                    <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Zust">
+                                </a>
                             </div>
                             <div class="vector-image">
-                                <img src="assets/images/vector.png" alt="image">
+                                <img src="{{ asset('frontend/assets/images/vector.png') }}" alt="image">
                             </div>
                         </div>
                     </div>
@@ -81,16 +83,10 @@
                                 </div>
                             </div>
                             <button type="submit" class="default-btn">Login</button>
-                            <div class="or-text"><span>Or</span></div>
-                            <button type="submit" class="google-btn">Log In with Google</button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="home-btn-icon">
-            <a href="index.html"><i class="flaticon-home"></i></a>
         </div>
     </div>
     <!-- End Preloader Area -->

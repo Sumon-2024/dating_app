@@ -128,16 +128,6 @@ jQuery(
         $(window).on("load", function () {
             $(".preloader-area").fadeOut();
         });
-
-        // Buy Now Btn
-        $("body").append(
-            "<a href='https://1.envato.market/x9QgOO' target='_blank' class='buy-now-btn'>Buy Now</a>"
-        );
-
-        // Switch Btn
-        $("body").append(
-            "<div class='switch-box'><label id='switch' class='switch'><input type='checkbox' onchange='toggleTheme()' id='slider'><span class='slider round'></span></label></div>"
-        );
     })(jQuery)
 );
 

@@ -48,10 +48,12 @@
                             <div class="d-table-cell">
                                 <div class="content-image">
                                     <div class="logo">
-                                        <a href="index.html"><img src="assets/images/logo.png" alt="Zust"></a>
+                                        <a href="index.html">
+                                            <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Zust">
+                                        </a>
                                     </div>
                                     <div class="vector-image">
-                                        <img src="assets/images/vector.png" alt="image">
+                                        <img src="{{ asset('frontend/assets/images/vector.png') }}" alt="image">
                                     </div>
                                 </div>
                             </div>
@@ -91,16 +93,10 @@
                                 </p>
                             </div>
                             <button type="submit" class="default-btn">Register</button>
-                            <div class="or-text"><span>Or</span></div>
-                            <button type="submit" class="google-btn">Log In with Google</button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="home-btn-icon">
-            <a href="index.html"><i class="flaticon-home"></i></a>
         </div>
     </div>
     <!-- End Preloader Area -->
