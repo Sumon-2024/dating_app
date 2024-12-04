@@ -46,14 +46,14 @@ Route::middleware('auth')->group(function () {
 
 
 // Protect routes that require authentication
-Route::middleware(['auth', 'verified'])->group(function () {
-    // HomeController
-    Route::get('/home', [HomeController::class, 'home'])->name('home');
+// Route::middleware(['auth', 'verified'])->group(function () {
+// HomeController
+Route::get('/home', [HomeController::class, 'home'])->name('home');
 
-    // DashboardController - restrict to specific roles
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')
-        ->middleware('role:super-admin|admin|moderator');
-});
+// DashboardController - restrict to specific roles
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')
+    ->middleware('role:super-admin|admin|moderator');
+// });
 
 
 // Fallback route for unauthorized access
