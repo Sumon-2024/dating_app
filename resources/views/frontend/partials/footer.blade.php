@@ -2,9 +2,8 @@
 <div class="copyrights-area">
     <div class="container">
         <div class="row align-items-center">
-            <p>
-                <i class="ri-copyright-line"></i>
-                SEO Expate Ltd.
+            <p><i class="ri-copyright-line"></i>Zust. All Rights Reserved by <a href="https://envytheme.com/"
+                    target="_blank">EnvyTheme</a></p>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="ar" dir="rtl">
 @include('frontend.partials.header')
 
 <body>
@@ -23,13 +23,13 @@
         @include('frontend.partials.navbar')
         <!-- End Navbar Area -->
 
-        <!-- Start Sidemenu Area -->
+        <!-- Start leftsidebar Area -->
         @include('frontend.partials.left-sidebar')
-        <!-- End Sidemenu Area -->
+        <!-- End leftsidebar Area -->
 
-        <!-- Start Content Page Box Area -->
+        <!-- Start Content body -->
         @yield('content')
-        <!-- End Content Page Box Area -->
+        <!-- End Content body -->
 
         <!-- Start Right Sidebar Area -->
         @include('frontend.partials.right-sidebar')
@@ -37,6 +37,7 @@
 
     </div>
     <!-- End Main Content Wrapper Area -->
+
 
     {{-- Footer start --}}
     @include('frontend.partials.footer')

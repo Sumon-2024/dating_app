@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 @push('css')
-    {{--  --}}
+    {{-- --}}
 @endpush
 @section('content')
     <div class="content-page-box-area">
@@ -1024,5 +1024,5 @@
     </div>
 @endsection
 @push('js')
-    {{--  --}}
+    {{-- --}}
 @endpush
