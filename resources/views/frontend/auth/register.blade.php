@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="zxx">
 
 <head>
     <!-- Required meta tags -->
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Links of CSS files -->
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.rtl.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/remixicon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/flaticon.css') }}">
@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/dark.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/assets/css/rtl.css') }}">
     <title>SEO Expate Bangladesh Ltd.</title>
     <link rel="icon" type="image/png" href="{{ asset('frontend/assets/images/favicon.png') }}">
 </head>
@@ -49,12 +48,10 @@
                             <div class="d-table-cell">
                                 <div class="content-image">
                                     <div class="logo">
-                                        <a href="{{ url('index.html') }}">
-                                            <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="Zust">
-                                        </a>
+                                        <a href="index.html"><img src="assets/images/logo.png" alt="Zust"></a>
                                     </div>
                                     <div class="vector-image">
-                                        <img src="{{ asset('frontend/assets/images/vector.png') }}" alt="image">
+                                        <img src="assets/images/vector.png" alt="image">
                                     </div>
                                 </div>
                             </div>
@@ -66,61 +63,37 @@
                     <div class="register-form">
                         <h2>Register</h2>
 
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-
-                            <!-- Name -->
+                        <form>
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input id="name" type="text" name="name" :value="old('name')" required
-                                    autofocus autocomplete="name" class="form-control">
-                                @if ($errors->has('name'))
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                                @endif
+                                <label>Name</label>
+                                <input type="text" class="form-control">
                             </div>
 
-                            <!-- Email Address -->
                             <div class="form-group">
-                                <label for="email">Email</label>
-                                <input id="email" type="email" name="email" :value="old('email')" required
-                                    autocomplete="username" class="form-control">
-                                @if ($errors->has('email'))
-                                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                                @endif
+                                <label>Email</label>
+                                <input type="email" class="form-control">
                             </div>
 
-                            <!-- Password -->
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" name="password" required
-                                    autocomplete="new-password" class="form-control">
-                                @if ($errors->has('password'))
-                                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                                @endif
+                                <label>Password</label>
+                                <input type="password" class="form-control">
                             </div>
 
-                            <!-- Confirm Password -->
                             <div class="form-group">
-                                <label for="password_confirmation">Confirm Password</label>
-                                <input id="password_confirmation" type="password" name="password_confirmation" required
-                                    autocomplete="new-password" class="form-control">
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                                @endif
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control">
                             </div>
 
-                            <!-- Privacy Checkbox -->
                             <div class="remember-me-wrap">
                                 <p>
-                                    <input type="checkbox" id="test1" name="privacy" required>
+                                    <input type="checkbox" id="test1">
                                     <label for="test1">I Accept The <a href="privacy.html">Privacy</a></label>
                                 </p>
                             </div>
-
-                            <!-- Submit Button -->
                             <button type="submit" class="default-btn">Register</button>
+                            <div class="or-text"><span>Or</span></div>
+                            <button type="submit" class="google-btn">Log In with Google</button>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -142,7 +115,6 @@
     <script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
-
 </body>
 
 </html>
