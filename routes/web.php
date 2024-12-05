@@ -1,62 +1,53 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Frontend\HomeController;
-use Spatie\Permission\Middlewares\RoleMiddleware;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Spatie\Permission\Middlewares\PermissionMiddleware;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\PermissionController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
 
 
+// Route::get('/', [AuthController::class, 'showLoginForm']);
+// Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+// Route::get('/home', [HomeController::class, 'home'])->name('home');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware('guest')->group(function () {
-    // Login routes 
-    Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-    // Register routes 
-    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register/store', [RegisteredUserController::class, 'store']);
-    //Forgot password routes
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
-    //Reset password routes
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+
+Route::get('/', function () {
+    return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Permission controller 
+    Route::prefix('permissions')->name('permissions.')->group(function () {
+        Route::get('/', [PermissionController::class, 'index'])->name('index');
+        Route::get('/create', [PermissionController::class, 'create'])->name('create');
+        Route::post('/store', [PermissionController::class, 'store'])->name('store');
+        Route::get('/{permission}/edit', [PermissionController::class, 'edit'])->name('edit');
+        Route::put('/{permission}', [PermissionController::class, 'update'])->name('update');
+        Route::delete('/permission/{id}', [PermissionController::class, 'destroy'])->name('destroy');
+    });
 });
 
-
-// Protect routes that require authentication
-// Route::middleware(['auth', 'verified'])->group(function () {
-// HomeController
-Route::get('/home', [HomeController::class, 'home'])->name('home');
-
-// DashboardController - restrict to specific roles
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')
-    ->middleware('role:super-admin|admin|moderator');
-// });
-
-
-// Fallback route for unauthorized access
-Route::fallback(function () {
-    return response()->view('errors.403', [], 403);
-});
+require __DIR__ . '/auth.php';

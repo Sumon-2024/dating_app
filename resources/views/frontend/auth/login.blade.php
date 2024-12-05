@@ -61,29 +61,48 @@
                     <div class="login-form">
                         <h2>Login</h2>
 
-                        <form>
+                        <form method="POST" action="">
+                            @csrf
+
+                            <!-- Username or Email -->
                             <div class="form-group">
-                                <label>Username or email</label>
-                                <input type="text" class="form-control">
+                                <label for="email">Username or email</label>
+                                <input id="email" type="email" name="email" :value="old('email')" required
+                                    autofocus autocomplete="username" class="form-control">
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Password -->
                             <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control">
+                                <label for="password">Password</label>
+                                <input id="password" type="password" name="password" required
+                                    autocomplete="current-password" class="form-control">
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
 
+                            <!-- Remember Me -->
                             <div class="remember-me-wrap d-flex justify-content-between align-items-center">
                                 <p>
-                                    <input type="checkbox" id="test1">
-                                    <label for="test1">Remember me</label>
+                                    <input id="remember_me" type="checkbox" name="remember" class="rounded">
+                                    <label for="remember_me">Remember me</label>
                                 </p>
 
                                 <div class="lost-your-password-wrap">
-                                    <a href="forgot-password.html" class="lost-your-password">Forgot password ?</a>
+                                    @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}" class="lost-your-password">Forgot
+                                            password?</a>
+                                    @endif
                                 </div>
                             </div>
+
+                            <!-- Submit Button -->
                             <button type="submit" class="default-btn">Login</button>
                         </form>
+
                     </div>
                 </div>
             </div>

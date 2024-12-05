@@ -94,6 +94,17 @@
                         <li> <a href="index.html"><i class='bx bx-radio-circle'></i>Support Chat</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon"><i class='bx bx-lock'></i></div>
+                        <div class="menu-title">Roles & Premissions</div>
+                    </a>
+                    <ul>
+                        <li> <a href="{{ route('permissions.index') }}"><i class='bx bx-radio-circle'></i>Premission</a>
+                        </li>
+                        <li> <a href="index.html"><i class='bx bx-radio-circle'></i>Role</a></li>
+                    </ul>
+                </li>
             </ul>
             <!--end navigation-->
         </div>
