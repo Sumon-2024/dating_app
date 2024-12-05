@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/{permission}/edit', [PermissionController::class, 'edit'])->name('edit');
         Route::put('/{permission}', [PermissionController::class, 'update'])->name('update');
         Route::delete('/permission/{id}', [PermissionController::class, 'destroy'])->name('destroy');
+    });
+
+    // Roles controller 
+    Route::prefix('permissions')->name('permissions.')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/{permission}/edit', [RoleController::class, 'edit'])->name('edit');
+        Route::put('/{permission}', [RoleController::class, 'update'])->name('update');
+        Route::delete('/permission/{id}', [RoleController::class, 'destroy'])->name('destroy');
     });
 });
 
